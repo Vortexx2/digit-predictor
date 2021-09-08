@@ -1,0 +1,13 @@
+name: fastapi-ml
+channels:
+  - defaults
+dependencies:
+  - torchvision
+  - cudatoolkit=10.2
+  - torchaudio
+  - pytorch
+  - matplotlib
+  - numpy
+  - fastapi
+  - uvicorn
+prefix: D:\ProgramFiles\anaconda\envs\fastapi-ml
