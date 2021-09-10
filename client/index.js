@@ -1,8 +1,15 @@
 class Canvas {
-  constructor(canvas_id, draw, coord) {
+  constructor(canvas_id, draw, coord, bgColor, penColor) {
     this.canvas_id = canvas_id;
     this.draw = draw;
     this.coord = coord;
+    this.bgColor = bgColor;
+    this.penColor = penColor;
+
+    const canvas = document.getElementById(this.canvas_id);
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = this.bgColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
   /**
@@ -26,7 +33,7 @@ class Canvas {
     ctx.beginPath();
 
     // Pull from the color and width from the associated controls. The line cap is hardcoded to be rounded, because it looks more natural for a drawing application
-    ctx.strokeStyle = 'white';
+    ctx.strokeStyle = this.penColor;
     ctx.lineCap = 'round';
     ctx.lineWidth = 20;
 
@@ -49,16 +56,23 @@ class Canvas {
   stopDrawing(event) {
     this.draw = false;
   }
-  
+
   clear() {
     const canvas = document.getElementById(this.canvas_id);
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = this.bgColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  getDataURL() {
+    const canvas = document.getElementById(this.canvas_id);
+    return canvas.toDataURL();
   }
 }
 
 function main() {
-  const canvas = new Canvas('sketch', false, { x: 0, y: 0 });
+  const canvas = new Canvas('sketch', false, { x: 0, y: 0 }, 'black', 'white');
 
   // Add event listeners for the mousedown, mouseup, and mousemove
   document.addEventListener('mousedown', function (e) {
@@ -74,9 +88,15 @@ function main() {
   });
 
   const clearButton = document.getElementById('clear');
-  clearButton.addEventListener("click", () => {
+  clearButton.addEventListener('click', () => {
     canvas.clear();
-  })
+  });
+
+  const predictButton = document.getElementById('predict');
+  predictButton.addEventListener('click', () => {
+    const dataUrl = canvas.getDataURL();
+    window.open(dataUrl, 'image', 'width=900, height=900');
+  });
 }
 
 window.addEventListener('load', () => {
