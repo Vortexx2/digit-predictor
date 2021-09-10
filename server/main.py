@@ -1,11 +1,26 @@
-from typing import List
+from typing import Optional
 
+import logging
 from fastapi import FastAPI
-from model import DigitModel
-import torch
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+# from model import DigitModel
 
 app = FastAPI()
-model = DigitModel()
+# model = DigitModel()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+class PostModel(BaseModel):
+  generated_at: Optional[str]
+  image: str
 
 
 @app.get('/')
@@ -13,6 +28,8 @@ def read_root():
   return {"Hello": "World"}
 
 
-# @app.post('/predict')
-# def predict_digit(x: List[List[int]]):
-
+@app.post('/predict')
+def predict_digit(x: PostModel):
+  logging.debug(x.generated_at)
+  # logging.debug(x.data64)
+  return x

@@ -1,3 +1,5 @@
+const API = 'http://localhost:8000/';
+
 class Canvas {
   constructor(canvas_id, draw, coord, bgColor, penColor) {
     this.canvas_id = canvas_id;
@@ -67,7 +69,7 @@ class Canvas {
 
   getDataURL() {
     const canvas = document.getElementById(this.canvas_id);
-    return canvas.toDataURL();
+    return canvas.toDataURL('image/png');
   }
 }
 
@@ -93,9 +95,25 @@ function main() {
   });
 
   const predictButton = document.getElementById('predict');
-  predictButton.addEventListener('click', () => {
+  predictButton.addEventListener('click', async () => {
     const dataUrl = canvas.getDataURL();
     window.open(dataUrl, 'image', 'width=900, height=900');
+    const data64 = dataUrl.split(',')[1];
+    const body = {
+      generated_at: new Date().toISOString(),
+      image: data64,
+    };
+
+    const response = await fetch(API + 'predict', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    }).then(response => response.json());
+
+
+    // console.log(response);
   });
 }
 
