@@ -1,13 +1,15 @@
 from typing import Optional
 
 import logging
+logging.basicConfig(level=logging.DEBUG)
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-# from model import DigitModel
+from model import DigitModel
 
 app = FastAPI()
-# model = DigitModel()
+model = DigitModel()
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,5 +33,4 @@ def read_root():
 @app.post('/predict')
 def predict_digit(x: PostModel):
   logging.debug(x.generated_at)
-  # logging.debug(x.data64)
   return x

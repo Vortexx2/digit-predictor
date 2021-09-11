@@ -97,7 +97,6 @@ function main() {
   const predictButton = document.getElementById('predict');
   predictButton.addEventListener('click', async () => {
     const dataUrl = canvas.getDataURL();
-    window.open(dataUrl, 'image', 'width=900, height=900');
     const data64 = dataUrl.split(',')[1];
     const body = {
       generated_at: new Date().toISOString(),
@@ -112,8 +111,7 @@ function main() {
       body: JSON.stringify(body),
     }).then(response => response.json());
 
-
-    // console.log(response);
+    console.log(response);
   });
 }
 
