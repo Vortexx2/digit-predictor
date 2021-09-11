@@ -64,7 +64,7 @@ class Canvas {
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = this.bgColor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, canvas.width + 10, canvas.height + 10);
   }
 
   getDataURL() {
