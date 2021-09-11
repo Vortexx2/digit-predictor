@@ -20,11 +20,11 @@ class DigitModel:
 
     self.model.eval()
 
-  def predict(self, x: np.ndarray):
-    trans = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
+  def predict(self, x: torch.Tensor):
+    trans = transforms.Compose([transforms.Normalize((0.5,), (0.5,))])
 
     x = trans(x)
     x = x.to(self.dev)
-    x = x.reshape(784)
+    x = x.reshape((1, 784))
 
     return self.model(x)

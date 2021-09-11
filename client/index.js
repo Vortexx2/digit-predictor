@@ -69,7 +69,7 @@ class Canvas {
 
   getDataURL() {
     const canvas = document.getElementById(this.canvas_id);
-    return canvas.toDataURL('image/png');
+    return canvas.toDataURL('image/jpeg');
   }
 }
 
