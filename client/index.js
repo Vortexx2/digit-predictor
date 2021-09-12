@@ -111,7 +111,13 @@ function main() {
       body: JSON.stringify(body),
     }).then(response => response.json());
 
-    console.log(response);
+    const titleDict = {
+      prediction: document.getElementById('prediction'),
+      probab: document.getElementById('probab'),
+    };
+
+    titleDict.prediction.innerText = `Prediction: ${response.num}`;
+    titleDict.probab.innerText = `Probability: ${response.prob}`;
   });
 }
 
