@@ -16,3 +16,8 @@ To start the client locally, use a Live Server development server to host the cl
 
 - `uvicorn main:app --reload`
 
+## Possible Future Features
+
+1. Using a CNN to better learn the patterns in the image.
+2. Online Learning by confirmation of the correct result from the user.
+3. Understand other possible preprocessing techniques (because of the downsampling, canvas properties) that might help.
